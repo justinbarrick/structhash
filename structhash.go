@@ -221,7 +221,9 @@ func filterField(f reflect.StructField, i *item, version int) (bool, error) {
 				if !found || property.Type.NumOut() != 1 {
 					return false, tagError(tag)
 				}
-				i.value = property.Func.Call([]reflect.Value{i.value})[0]
+				if ! i.value.IsNil() {
+					i.value = property.Func.Call([]reflect.Value{i.value})[0]
+				}
 			}
 		}
 	} else {
